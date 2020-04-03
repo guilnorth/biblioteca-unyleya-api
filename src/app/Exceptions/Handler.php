@@ -49,6 +49,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+
+        /**
+         * Basic validation for ModelNotFoundException
+         */
+        if ($exception instanceof ModelNotFoundException) {
+            return response()->json([
+                'success' => false,
+                'status' => 'HTTP_BAD_REQUEST',
+                'message' => $exception->getMessage()
+              ], 400);
+        }
         return parent::render($request, $exception);
     }
 }
