@@ -29,7 +29,16 @@ class Publisher extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at','deleted_at'];
+
+    protected static function boot(){
+        parent::boot();
+
+        static::deleting(function($publisher) {
+            if ($publisher->book()->count() > 0) 
+                return false;
+        });
+    }
     
     
     public function book(){

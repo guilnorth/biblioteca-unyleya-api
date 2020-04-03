@@ -18,7 +18,6 @@ class PublisherController extends Controller {
     public function create(Request $request) {
         $this->validate($request, [
             'name' => 'required',
-            //'email' => 'required|email|unique:users'
         ]);
         $publisher = Publisher::create($request->all());
 
@@ -33,7 +32,10 @@ class PublisherController extends Controller {
     }
 
     public function delete($id) {
-        Publisher::findOrFail($id)->delete();
-        return response()->json('Deleted Successfully', 200);
+        $publisher = Publisher::findOrFail($id);
+        $isDeleted = $publisher->delete();
+        return $isDeleted 
+            ? response()->json('Deleted Successfully', 200)
+            : response()->json('Deleted Error', 500);
     }
 }
