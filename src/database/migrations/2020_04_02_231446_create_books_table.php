@@ -42,6 +42,7 @@ class CreateBooksTable extends Migration
                 ->references('id')->on('publishers')
                 ->onDelete('RESTRICT');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

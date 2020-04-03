@@ -19,6 +19,7 @@ class CreateAuthorsTable extends Migration
             $table->year('year_birth');
             $table->enum('gender', ['F', 'M']);	
             $table->string('nationality');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
