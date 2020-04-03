@@ -24,7 +24,7 @@ class CreateBooksTable extends Migration
             $table->integer('author_id')->unsigned();
             $table->foreign('author_id')
                 ->references('id')->on('authors')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT');
 
             /**
              * Genre relation
@@ -32,7 +32,7 @@ class CreateBooksTable extends Migration
             $table->integer('genre_id')->unsigned();
             $table->foreign('genre_id')
                 ->references('id')->on('genres')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT');
 
             /**
              * Publisher relation
@@ -40,7 +40,7 @@ class CreateBooksTable extends Migration
             $table->integer('publisher_id')->unsigned();
             $table->foreign('publisher_id')
                 ->references('id')->on('publishers')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT');
 
             $table->timestamps();
         });
