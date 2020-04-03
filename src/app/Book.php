@@ -13,7 +13,7 @@ class Book extends Model
      * @var array
      */
     protected $fillable = [
-        'author','publisher','gender','title','year'
+        'author_id','publisher_id','genre_id','title','year'
     ];
 
     /**
@@ -21,7 +21,7 @@ class Book extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at','author_id','publisher_id','genre_id'];
 
     public function publisher() {
 
