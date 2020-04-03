@@ -12,13 +12,12 @@ class GenreController extends Controller {
     }
 
     public function getOne($id) {
-        return response()->json(Genre::find($id));
+        return response()->json(Genre::findOrFail($id));
     }
 
     public function create(Request $request) {
         $this->validate($request, [
-            'name' => 'required',
-            //'email' => 'required|email|unique:users'
+            'name' => 'required|string',
         ]);
         $genre = Genre::create($request->all());
 
@@ -33,7 +32,10 @@ class GenreController extends Controller {
     }
 
     public function delete($id) {
-        Genre::findOrFail($id)->delete();
-        return response()->json('Deleted Successfully', 200);
+        $genre = Genre::findOrFail($id);
+        $isDeleted = $genre->delete();
+        return $isDeleted 
+            ? response()->json('Deleted Successfully', 200)
+            : response()->json('The item could not be deleted', 500);
     }
 }

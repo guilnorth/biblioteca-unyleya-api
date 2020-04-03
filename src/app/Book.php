@@ -3,9 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
+
+    use SoftDeletes;
+    /**
+     * The attributes mutator dates
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +30,7 @@ class Book extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'updated_at','author_id','publisher_id','genre_id'];
+    protected $hidden = ['created_at', 'updated_at','author_id','publisher_id','genre_id', 'deleted_at'];
 
     public function publisher() {
 

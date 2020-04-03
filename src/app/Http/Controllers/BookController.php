@@ -8,6 +8,8 @@ use App\Publisher;
 use App\Author;
 use Illuminate\Http\Request;
 
+
+
 class BookController extends Controller {
 	
 	public function getAll() {
@@ -16,7 +18,7 @@ class BookController extends Controller {
 	
 	public function getOne($id) {
 		
-		$book =  Book::with(['author','publisher','genre'])->find($id);
+		$book =  Book::with(['author','publisher','genre'])->findOrFail($id);
 		
 		return response()->json($book);
 	}
@@ -26,11 +28,14 @@ class BookController extends Controller {
 		$this->validate($request, [
                 'title' => 'required',
                 'year' => 'required',
+                'author_id' => 'required',
+                'publisher_id' => 'required',
+                'genre_id' => 'required',
         ]);
 
-        $author = Author::findOrFail($request->author);
-        $publisher = Publisher::findOrFail($request->publisher);
-        $genre = Genre::findOrFail($request->genre);
+        $author = Author::findOrFail($request->author_id);
+        $publisher = Publisher::findOrFail($request->publisher_id);
+        $genre = Genre::findOrFail($request->genre_id);
         $book = new Book();
         $book->title = $request->title;
         $book->year = $request->year; 

@@ -12,7 +12,7 @@ class PublisherController extends Controller {
     }
 
     public function getOne($id) {
-        return response()->json(Publisher::find($id));
+        return response()->json(Publisher::findOrFail($id));
     }
 
     public function create(Request $request) {
@@ -36,6 +36,6 @@ class PublisherController extends Controller {
         $isDeleted = $publisher->delete();
         return $isDeleted 
             ? response()->json('Deleted Successfully', 200)
-            : response()->json('Deleted Error', 500);
+            : response()->json('The item could not be deleted', 500);
     }
 }

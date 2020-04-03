@@ -3,9 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Genre extends Model
 {
+
+    use SoftDeletes;
+    /**
+     * The attributes mutator dates
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -21,9 +30,21 @@ class Genre extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
-    public function books(){
+    public function book(){
         return $this->hasMany(Book::class);
+    }
+
+    /**
+     * Delete only if there are no related records
+     */
+    protected static function boot(){
+        parent::boot();
+
+        static::deleting(function($genre) {
+            if ($genre->book()->count() > 0) 
+                return false;
+        });
     }
 }

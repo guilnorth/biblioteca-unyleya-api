@@ -12,7 +12,7 @@ class AuthorController extends Controller {
     }
 
     public function getOne($id) {
-        return response()->json(Author::find($id));
+        return response()->json(Author::findOrFail($id));
     }
 
     public function create(Request $request) {
@@ -33,7 +33,10 @@ class AuthorController extends Controller {
     }
 
     public function delete($id) {
-        Author::findOrFail($id)->delete();
-        return response()->json('Deleted Successfully', 200);
+        $author = Author::findOrFail($id);
+        $isDeleted = $author->delete();
+        return $isDeleted 
+            ? response()->json('Deleted Successfully', 200)
+            : response()->json('The item could not be deleted', 500);
     }
 }
