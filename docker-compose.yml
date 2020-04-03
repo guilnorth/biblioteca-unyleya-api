@@ -8,8 +8,11 @@ services:
     ports:
       - "3306:3306"
     environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
+      
 
   nginx:
     container_name: nginx
