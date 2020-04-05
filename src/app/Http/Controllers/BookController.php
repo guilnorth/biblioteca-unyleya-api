@@ -49,6 +49,9 @@ class BookController extends Controller {
     public function update($id, Request $request) {
         $book = Book::findOrFail($id);
         $book->update($request->all());
+        $book->author;
+        $book->genre;
+        $book->publisher;
         return response()->json($book, 200);
     }
     
